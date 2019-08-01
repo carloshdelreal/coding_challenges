@@ -1,3 +1,14 @@
+def print_tree(array)
+  array_tree = []
+  array_tree += array
+	count = 1
+	while array_tree.length > 0
+		puts array_tree.shift(count).to_s.center(150, " - ")
+		count = count*2
+	end
+
+end
+
 class Node
 	attr_reader :data
 	attr_accessor :left, :right
@@ -6,35 +17,35 @@ class Node
 		@data = data
 	end
 end
+  
+def array_to_tree(array, i)
+	return nil if i >= array.length || array[i] == 0
 
-def binary_search_tree(array)
-  # your code here
-  def insert_node(tree, node)
-    if tree.data > node.data
-      if tree.left == nil
-        tree.left = node
-      else
-        insert_node(tree.left, node)
-      end
-    else
-      if tree.right == nil
-        tree.right = node
-      else
-        insert_node(tree.right, node)
-      end
-    end
-  end
-  tree = Node.new(array.slice!(0))
-  array.each do | x |
-    node = Node.new(x)
-    insert_node(tree,node)
-  end
-  return tree
+	node = Node.new(array[i])
+	node.left = array_to_tree(array, 2*i+1)
+	node.right = array_to_tree(array, 2*i+2)
+
+	node
+end
+def max_child(tree)
+  return 0 if tree == nil
+  return 1 if tree.left == nil && tree.right == nil
+  return [max_child(tree.left), max_child(tree.right)].max + 1
+end
+
+def balanced(tree)
+  return true if tree == nil
+  return true if tree.left == nil && tree.right == nil
+  return false if ( max_child(tree.left) - max_child(tree.right) ).abs > 1
+  return balanced(tree.left) && balanced(tree.right)
 end
 
 def balanced_tree?(array_tree)
-	# write your code here
-	tree = binary_search_tree(array_tree)
+  # write your code here
+  #print_tree(array_tree)
+  tree = array_to_tree(array_tree,0)
+  balanced(tree)
+
 end
 
 puts balanced_tree?([1, 2, 0, 3, 4, 0, 0])
