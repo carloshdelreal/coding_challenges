@@ -1,7 +1,5 @@
 require 'set'
 
-
-
 def number_of_primes(arr)
 	# write your code here
 	count = 0
@@ -12,7 +10,7 @@ def number_of_primes(arr)
 end
 
 def load_primes
-	for i in 0...10000
+	for i in 1...10000
 		$primes.add i if is_prime? i
 	end
 end
