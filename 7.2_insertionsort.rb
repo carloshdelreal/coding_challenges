@@ -1,20 +1,20 @@
+# frozen_string_literal: true
+
 def insertion_sort(array)
-	# write your code here
-	index = array.length-1
-	item = array[index]
-	loop do
-		if item > array[index-1] || index ==0
-			array[index] = item
-			break
-		end
-		array[index] = array[index-1]
-		puts array.join(" ")
-		index -= 1
-		
-	end
-	
-	puts array.join(" ")
-	
+  # write your code here
+  index = array.length - 1
+  item = array[index]
+  loop do
+    if item > array[index - 1] || index == 0
+      array[index] = item
+      break
+    end
+    array[index] = array[index - 1]
+    puts array.join(' ')
+    index -= 1
+  end
+
+  puts array.join(' ')
 end
 
 insertion_sort([1, 3, 2])

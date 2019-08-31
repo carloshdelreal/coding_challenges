@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 def connected_nodes(graph, start)
   visited = []
   q = Queue.new
   q.push(start)
-  while q.length > 0
+  until q.empty?
     poped = q.pop
-    unless visited.any? poped
-      nodes = graph[poped]
-      visited.push(poped)
-      nodes.each do | n |
-        q.push(n)
-      end
+    next if visited.any? poped
+
+    nodes = graph[poped]
+    visited.push(poped)
+    nodes.each do |n|
+      q.push(n)
     end
   end
   visited.sort
@@ -18,8 +20,9 @@ end
 def connected_graph?(graph)
   keys = graph.keys
   conected = connected_nodes(graph, keys[0])
-  return true if conected == keys 
-  return false
+  return true if conected == keys
+
+  false
 end
 
 # #test all nodes
@@ -34,34 +37,33 @@ end
 #   return true
 # end
 
-puts connected_graph?({
-  0 => [2], 
-  1 => [4], 
-  2 => [0, 5, 3], 
-  3 => [5, 2], 
-  4 => [5, 1], 
-  5 => [4, 2, 3],
-})
+puts connected_graph?(
+  0 => [2],
+  1 => [4],
+  2 => [0, 5, 3],
+  3 => [5, 2],
+  4 => [5, 1],
+  5 => [4, 2, 3]
+)
 # => true
 
-puts connected_graph?({
-  0 => [1, 2], 
-  1 => [0, 2], 
-  2 => [0, 1, 3, 4, 5], 
-  3 => [2, 4], 
-  4 => [3, 2], 
+puts connected_graph?(
+  0 => [1, 2],
+  1 => [0, 2],
+  2 => [0, 1, 3, 4, 5],
+  3 => [2, 4],
+  4 => [3, 2],
   5 => [2]
-})
+)
 # => true
 
 h = {
-  0 => [2], 
-  1 => [4], 
-  2 => [0, 5, 3], 
-  3 => [5, 2], 
-  4 => [5, 1], 
+  0 => [2],
+  1 => [4],
+  2 => [0, 5, 3],
+  3 => [5, 2],
+  4 => [5, 1],
   5 => [4, 2, 3]
 }
 
-#h.each do | key, value | puts key end
-
+# h.each do | key, value | puts key end

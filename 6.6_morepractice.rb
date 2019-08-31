@@ -1,17 +1,15 @@
+# frozen_string_literal: true
+
 def find_pairs(array, k)
-	# write your code here
-	pairs = []
-	
-	array.each_with_index do |element, index|
-	
-		for i in 0..index
-			if (element + array[i]) == k
-				pairs << [array[i], element]
-			end
-		end
-		
-	end
-	pairs
+  # write your code here
+  pairs = []
+
+  array.each_with_index do |element, index|
+    (0..index).each do |i|
+      pairs << [array[i], element] if (element + array[i]) == k
+    end
+  end
+  pairs
 end
 
 p find_pairs([1, 9, 11, 13, 2, 3, 7], 12)
