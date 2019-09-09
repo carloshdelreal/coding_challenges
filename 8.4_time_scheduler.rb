@@ -1,6 +1,6 @@
 def partition(array)
-  p array.join(' ')
-  return array if array.length == 1
+  #p array.join(' ')
+  return array if array.length <= 1
   agendabefore = []
   agendaafter = []
   pivot = array.delete_at(0)
@@ -11,23 +11,23 @@ def partition(array)
       agendaafter.append(event)
     end
   end
-  agendabefore + [pivot] + agendaafter
+  partition(agendabefore) + [pivot] + partition(agendaafter)
+
+end
+
+def clean_overlaps(array)
+  array.each_with_index do | item, index |
+    next if index == 0
+    puts item.join(' ')
+
+  end
 
 end
 
 def time_scheduler(array)
   # write your code here
-  agendabefore = []
-  agendaafter = []
-  pivot = array.slice(0,2)
-  array.each_slice(2) do |event|
-    if event[0] < pivot[0]
-      agendabefore.append(event)
-    else
-      agendaafter.append(event)
-    end 
-  end
-  partition(agendabefore) + [pivot] + partition(agendaafter)
+  agenda = array.each_slice(2).to_a 
+  clean_overlaps(partition(agenda))
   
 end
 
