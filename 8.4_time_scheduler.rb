@@ -12,15 +12,25 @@ def partition(array)
     end
   end
   partition(agendabefore) + [pivot] + partition(agendaafter)
-
 end
 
-def clean_overlaps(array)
-  array.each_with_index do | item, index |
-    next if index == 0
-    puts item.join(' ')
+def fits(schedule, event)
+  return true if schedule.empty?
+  return schedule[-1][1] <= event[0]
+end
 
+def clean_overlaps(array, schedule=[])
+  return schedule if array.empty?
+  event = array.shift()
+  if fits(schedule,event) 
+    schedule << event
+  else
+    if fits(schedule.slice(0,schedule.length-1),event)
+      poped = schedule.pop
+      poped[1] < event[1] ? schedule << poped : schedule << event
+    end
   end
+  clean_overlaps(array,schedule)
 
 end
 
