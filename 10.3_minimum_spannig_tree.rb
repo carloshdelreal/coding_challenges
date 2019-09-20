@@ -25,46 +25,47 @@ def matrix_to_graph(matrix, start)
   graph
 end
 
-def shortest_path(graph, parents = [[0,0]], visited = [], visited_hash = {})
-  return visited, visited_hash if parents.length <=0
-  level_nodes = []
-  
+def shortest_path(graph, visited = [], parents = [[0,0]], visited_hash = {})
+  return graph, visited, visited_hash if parents.length <=0
+    
   parent = parents.shift()
-  if visited_hash[parent[0]] == nil
-    visited_hash[parent[0]] = parent[1]
-    visited << parent
-  elsif visited_hash[parent[0]] > parent[1]
-    visited.delete([parent[0], visited_hash[parent[0]]])
-    visited << parent
-    visited_hash[parent[0]] = parent[1]
-  end
+  visited << parent[1]
   level_nodes = graph[parent[0]]
-  
-  selected_nodes = []
-  level_nodes += parents
-  level_nodes.each do |level_node|
-    if visited_hash[level_node[0]] == nil
-      selected_nodes << level_node
-    elsif visited_hash[level_node[0]] > level_node[1]
-      selected_nodes << level_node
-    end
-  end
-  selected_nodes.sort_by!{ |el| el[1] }
   # puts "Parent: #{parent.to_s}"
   # puts "Level Nodes: #{level_nodes}"
-  # puts "Visited: #{visited}, Visited Hash: #{visited_hash}"
+
+  selected_nodes = []
+  cost = nil
+  path = nil
+  level_nodes.each do |level_node|
+    selected_nodes << level_node unless visited_hash[level_node[0]]
+    cost ||= level_node[1]
+    path ||= level_node[0]
+    if level_node[1] < cost
+      cost = level_node[1]
+      path = level_node[0]
+    end
+  end
+  visited_hash[parent[0]] = [cost,path] # unless visited_hash[parent[0]]
+
+  parents.each do |node|
+    selected_nodes << node unless visited_hash[node[0]]
+  end
+  
+  selected_nodes.sort_by!{ |el| [el[1], el[0]] }
+
+  
   # puts "Selected: #{selected_nodes.to_s}"
   # puts ""
 
-  shortest_path(graph, selected_nodes, visited, visited_hash)
+  shortest_path(graph, visited, selected_nodes, visited_hash)
   
 end
 
 def shortest_path_wg(matrix)
   # write your code here
   graph = matrix_to_graph(matrix,[0,0])
-  #minimum = shortest_path(graph)
-  minimum = shortest_path(graph)[0].collect{|x| x[1]}
+  minimum = shortest_path(graph)[1]
   minimum.shift()
   minimum
 end
