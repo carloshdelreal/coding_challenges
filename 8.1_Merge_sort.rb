@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 def merge_sort(array1, array2)
   # write your code here
   sorted_array = []
-  loop do 
-    #puts "Array1: #{array1}, Array2: #{array2}"
-    if array1[0] == nil && array2[0] == nil
+  loop do
+    # puts "Array1: #{array1}, Array2: #{array2}"
+    if array1[0].nil? && array2[0].nil?
       break
-    elsif array1[0] != nil && array2[0] == nil
+    elsif !array1[0].nil? && array2[0].nil?
       sorted_array.push(array1.shift)
-    elsif array1[0] == nil && array2[0] != nil
+    elsif array1[0].nil? && !array2[0].nil?
       sorted_array.push(array2.shift)
     elsif array1[0] < array2[0]
       sorted_array.push(array1.shift)
@@ -15,7 +17,7 @@ def merge_sort(array1, array2)
       sorted_array.push(array2.shift)
     end
   end
-  sorted_array  
+  sorted_array
 end
 
 p merge_sort([1, 3, 9, 11], [2, 4, 6, 8])

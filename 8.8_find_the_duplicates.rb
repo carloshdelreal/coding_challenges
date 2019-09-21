@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 def duplicates(arr1, arr2)
   # write your code here
   h = {}
-  arr1.each do | item |
+  arr1.each do |item|
     h[item] ? h[item] -= 1 : h[item] = -1
   end
-  
-  arr2.each do | item |
+
+  arr2.each do |item|
     h[item] ? h[item] += 1 : h[item] = 1
   end
 
@@ -15,7 +17,7 @@ def duplicates(arr1, arr2)
       extras << key
     end
   end
-  extras.sort()
+  extras.sort
 end
 
 p duplicates([203, 204, 205, 206, 207, 208, 203, 204, 205, 206], [203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 204, 205, 206])
