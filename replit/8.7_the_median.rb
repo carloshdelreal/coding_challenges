@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-
-def partition(array, dis_left=(array.length/2)-1, dis_right=(array.length/2)-1)
+def partition(array, dis_left = (array.length / 2) - 1, dis_right = (array.length / 2) - 1)
   return array if array.length <= 1
 
   pivot = array.first
@@ -12,10 +11,10 @@ def partition(array, dis_left=(array.length/2)-1, dis_right=(array.length/2)-1)
       item < pivot ? left << item : right << item
     end
   end
-  puts "left: #{left.to_s}, pivot: #{pivot}, right: #{right.to_s}, dis_left: #{dis_left}, dis_right: #{dis_right}"
-  
+  puts "left: #{left}, pivot: #{pivot}, right: #{right}, dis_left: #{dis_left}, dis_right: #{dis_right}"
+
   if left.length <= dis_left
-    dis_left = dis_left-left.length
+    dis_left -= left.length
     if dis_left == 0
       arr = [pivot] + partition(right, dis_left, dis_right)
       arr
@@ -25,7 +24,7 @@ def partition(array, dis_left=(array.length/2)-1, dis_right=(array.length/2)-1)
       arr
     end
   elsif right.length <= dis_right
-    dis_right = dis_right-right.length
+    dis_right -= right.length
     if dis_right == 0
       arr = partition(left, dis_left, dis_right) + [pivot]
       arr
@@ -35,7 +34,7 @@ def partition(array, dis_left=(array.length/2)-1, dis_right=(array.length/2)-1)
       arr
     end
   else
-    arr = partition(left+[pivot]+right, dis_left, dis_right)
+    arr = partition(left + [pivot] + right, dis_left, dis_right)
     arr
   end
 end
@@ -44,11 +43,10 @@ def median(array)
   # write your code here
   median_numbers = partition(array)
   if median_numbers.length == 2
-    median_numbers.sum/2.0
+    median_numbers.sum / 2.0
   else
     median_numbers[1]
   end
-
 end
 
 puts median([0, 1, 2, 4, 6, 5, 3])
