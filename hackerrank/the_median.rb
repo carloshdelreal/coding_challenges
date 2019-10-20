@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 def quicksort(arr, start = 0, endpoint = arr.length - 1)
   return unless start < endpoint
-  
+
   pivot_index = partition(arr, start, endpoint)
   quicksort(arr, start, pivot_index - 1)
   quicksort(arr, pivot_index + 1, endpoint)
@@ -29,11 +31,11 @@ end
 def findMedian(arr)
   arr = quicksort(arr)
   if arr.length.odd?
-    return arr[arr.length/2]
+    return arr[arr.length / 2]
   else
-    return (arr[arr.length/2 - 1] + arr[arr.length/2])/2.0
+    return (arr[arr.length / 2 - 1] + arr[arr.length / 2]) / 2.0
   end
 end
 
-p findMedian([1,2,3,4,5,6,7,8])
-p findMedian([1,2,3,4,5,6,7])
+p findMedian([1, 2, 3, 4, 5, 6, 7, 8])
+p findMedian([1, 2, 3, 4, 5, 6, 7])

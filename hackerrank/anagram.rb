@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 def anagram(s)
   return -1 if s.length.odd?
-  
+
   s = s.split('')
-  start = s.slice(0, s.length/2)
-  final = s.slice(s.length/2, s.length)
+  start = s.slice(0, s.length / 2)
+  final = s.slice(s.length / 2, s.length)
   count_hash = {}
   start.each do |letter|
     count_hash[letter] += 1 if count_hash[letter]
@@ -13,10 +15,11 @@ def anagram(s)
     count_hash[letter] -= 1 if count_hash[letter]
     count_hash[letter] = -1 unless count_hash[letter]
   end
-  
-  result = [0,0]
+
+  result = [0, 0]
   count_hash.values.each do |x|
     next if x.zero?
+
     if x.positive?
       result[0] += x
     else
@@ -35,7 +38,6 @@ p anagram('xaxbbbxx')
 p anagram('asdfjoieufoa')
 p anagram('fdhlvosfpafhalll')
 p anagram('mvdalvkiopaufl')
-
 
 # expected
 # 3
