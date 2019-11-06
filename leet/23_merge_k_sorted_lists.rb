@@ -30,44 +30,31 @@ n.next = ListNode.new(5)
 # @param {ListNode} l1
 # @param {ListNode} l2
 # @return {ListNode}
-def merge_lists(lists)
+def merge_k_lists(lists)
     head = nil
     current = nil
-    
-    loop do
-        smallest = nil
-        smallest_index = nil
-        lists.each_with_index do |l, index| 
-            if l.nil?
-                next
-            elsif smallest.nil?
-                smallest = l.val
-                smallest_index = index
-            elsif smallest > l.val
-                smallest = l.val
-                smallest_index = index
+    smallest = {}
+    lists.each do |l| 
+        if l.nil?
+            next
+        else
+            loop do
+                if smallest[l.val].nil?
+                    smallest[l.val] = 1
+                    l = l.next
+                else
+                    smallest[l.val] += 1
+                    l = l.next
+                end
+                break if l.nil?
             end
         end
-        
-        return head if smallest_index.nil?
-        l = lists[smallest_index]
-        
-        if l.nil?
-            break
-        elsif head.nil?
-            head = l
-            current = l
-            lists[smallest_index] = l.next
-        else
-            current.next = l
-            current = l
-            lists[smallest_index] = l.next()
-        end
-        # puts "L: #{l.val}, current: #{current.val}, head: #{head.val}"
-        # print_list(head)
-        # sleep(0.2)
     end
-    return head
+    solution = []
+    smallest.keys().sort().each do |x|
+        smallest[x].times{ solution.push x }
+    end
+    return solution
 end
 
 def print_list(list)
@@ -81,5 +68,5 @@ def print_list(list)
 end
 
 # p merge_two_lists(li1,li2)
-p merge_lists([])
-p merge_lists([li1, li2, li3])
+p merge_k_lists([])
+p merge_k_lists([li1, li2, li3])
