@@ -17,6 +17,18 @@ Benchmark.bm do |benchmark|
   benchmark.report('V 2.0') do
     sum = SumOf3.new
     n.times do
+      sum.three_sum_2(arr)
+    end
+  end
+  benchmark.report('V 3.0') do
+    sum = SumOf3.new
+    n.times do
+      sum.three_sum_3(arr)
+    end
+  end
+  benchmark.report('V 4.0') do
+    sum = SumOf3.new
+    n.times do
       sum.three_sum(arr)
     end
   end
