@@ -39,7 +39,25 @@ Benchmark.bm do |benchmark|
   benchmark.report('V 5.0') do
     sum = SumOf3.new
     n.times do
-      sum.three_sum(arr)
+      sum.three_sum_5(arr)
+    end
+  end
+  benchmark.report('V 6.0') do
+    sum = SumOf3.new
+    n.times do
+      sum.three_sum_6(arr)
+    end
+  end
+  benchmark.report('leet 1') do
+    sum = SumOf3.new
+    n.times do
+      sum.three_sum_leet_1(arr)
+    end
+  end
+  benchmark.report('leet 2') do
+    sum = SumOf3.new
+    n.times do
+      sum.three_sum_leet_2(arr)
     end
   end
 
