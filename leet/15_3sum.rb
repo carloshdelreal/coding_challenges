@@ -87,7 +87,19 @@ class SumOf3
     zero_index
   end
 
-  def three_sum(nums)
+  def load_indexes(nums)
+    indexes = {}
+    nums.each_with_index do |x, index|
+      if indexes[-x].nil?
+        indexes[-x] = [index]
+      else
+        indexes[-x].push(index)
+      end
+    end
+    indexes
+  end
+
+  def three_sum_4(nums)
     return [] if nums.length < 3
 
     # puts "Arr: #{nums.join(' ')}"
@@ -99,7 +111,7 @@ class SumOf3
       if indexes[-x].nil?
         indexes[-x] = [index]
       else
-        indexes[-x].append(index)
+        indexes[-x].push(index)
       end
     end
     finish = nums.length - 1
@@ -114,6 +126,33 @@ class SumOf3
 
           triplet = [nums[i], nums[j], nums[x]].sort
           solutions << triplet unless solutions.include? triplet
+        end
+      end
+    end
+    solutions
+  end
+
+  def three_sum(nums)
+    return [] if nums.length < 3
+
+    # puts "Arr: #{nums.join(' ')}"
+    nums.sort!
+    zero_index = greatest_negative_or_first_zero(nums)
+    solutions = []
+    indexes = load_indexes(nums)
+    finish = nums.length - 1
+    (0..zero_index).each do |i|
+      finish.downto(zero_index + 1).each do |j|
+        # puts "i: #{i}, j: #{j}"
+        next if indexes[nums[i] + nums[j]].nil?
+
+        comb = indexes[nums[i] + nums[j]] - [i, j]
+        comb.each do |x|
+          next if i > x || x > j
+
+          triplet = [nums[i], nums[j], nums[x]].sort
+          solutions << triplet unless solutions.include? triplet
+          break
         end
       end
     end
