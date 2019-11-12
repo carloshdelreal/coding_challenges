@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './leet/31_next_permutation'
 
 RSpec.describe Permutation do
