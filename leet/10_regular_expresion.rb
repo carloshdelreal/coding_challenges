@@ -28,9 +28,11 @@ class Regex
     curr_exp = exp_arr.shift while exp_arr[0].length == 2
     puts "curr_exp: #{curr_exp} exp_arr: #{exp_arr}"
     # return false if curr_exp && exp_arr
-    return true if exp_arr[0] == s[-1]
+    # return true if exp_arr[0] == s[-1]
 
-    exp_arr.all? { |x| x.length == 2 }
+    return true if exp_arr.empty?
+
+    false
   end
 
   def expressions(string)
