@@ -3,7 +3,7 @@
 # Regex class
 class Regex
   def is_match(s, p)
-    p_arr = if p.class == String 
+    p_arr = if p.class == String
               expressions(p)
             else
               p.dup
@@ -13,9 +13,9 @@ class Regex
 
     if result.nil?
       combinations = regex_combinations(p_arr)
-      # p combinations
+      # puts "combinations: #{combinations}" 
       combinations.each do |combination|
-        result = is_match(s,combination)
+        result = is_match(s, combination)
         return result if result == true
       end
     end
@@ -24,7 +24,7 @@ class Regex
   end
 
   def valid_regex?(s, exp_arr)
-    p exp_arr
+    # puts "valid_regex: #{exp_arr}"
     curr_exp = exp_arr.shift
     (0..(s.length - 1)).each do |i|
       # puts "s: #{s[i]}, curr_exp: #{curr_exp}"
@@ -39,16 +39,15 @@ class Regex
         return false
       end
     end
+    # puts "exp_arr: #{exp_arr}, curr_exp: #{curr_exp}"
     if exp_arr.empty?
       return true if curr_exp.nil? || curr_exp.length != 1
 
       return false
     end
 
-    puts "curr_exp: #{curr_exp}, exp_arr: #{exp_arr}"
-    curr_exp = exp_arr.shift while exp_arr[0].length == 2
-
     return true if exp_arr.empty? || curr_exp[0][0] == s[-1]
+    return true if curr_exp == '.*' && exp_arr[0] == s[-1]
 
     nil
   end
