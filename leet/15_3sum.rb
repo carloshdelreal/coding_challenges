@@ -8,7 +8,8 @@ class SumOf3
     nums.each_index do |i|
       break if nums[i].positive?
 
-      next if nums[i] == nums[i - 1] if i.positive?
+      next if i.positive? && (nums[i] == nums[i - 1])
+
       left = i + 1
       right = nums.size - 1
       while left < right
