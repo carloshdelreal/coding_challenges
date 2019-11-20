@@ -124,6 +124,14 @@ RSpec.describe Regex do
       result = true
       expect(rex.is_match(string, regular_ex)).to eql(result)
     end
+    it 'is_match("abbbcd", "ab*bbbcd") # true' do
+      rex = Regex.new
+
+      string = 'abbbcd'
+      regular_ex = 'ab*bbbcd'
+      result = true
+      expect(rex.is_match(string, regular_ex)).to eql(result)
+    end
   end
   describe 'expressions' do
     it 'from "aaa" gets ["a", "a", "a"]' do

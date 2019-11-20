@@ -13,7 +13,7 @@ class Regex
 
     if result.nil?
       combinations = regex_combinations(p_arr)
-      # puts "combinations: #{combinations}" 
+      # puts "combinations: #{combinations}"
       combinations.each do |combination|
         result = is_match(s, combination)
         return result if result == true
@@ -27,7 +27,7 @@ class Regex
     # puts "valid_regex: #{exp_arr}"
     curr_exp = exp_arr.shift
     (0..(s.length - 1)).each do |i|
-      # puts "s: #{s[i]}, curr_exp: #{curr_exp}"
+      puts "s: #{s[i]}, curr_exp: #{curr_exp}"
       return false if curr_exp.nil?
 
       if s[i] == curr_exp[0] || curr_exp[0] == '.'
