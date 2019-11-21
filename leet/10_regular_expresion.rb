@@ -1,61 +1,48 @@
-def is_match(s, p)
-  i = 0
-  j = 0
-  loop do
-      puts "letter #{s[i]} expresion #{p[j]}"
-      
-      if s[i].nil? || p[j].nil?
-          break
-      elsif s[i] == p[j] || p[j] == '.'
-          i += 1
-          j += 1
-      elsif p[j] == '*'
-          if s[i] == p[j-1] || p[j-1] == '.'
-              i += 1
-          else
-              j += 1
-          end
-      else 
-        if p[j+2].nil?
-          return false
-        elsif p[j+1] == '*'
-          j += 2
-        end
-      end        
-  end
-  remainder = p.slice(j..-1)
-  puts "Remainder: #{remainder}, expression: #{p}"
+# frozen_string_literal: true
 
-  if p[j].nil? && s[i].nil?
-    return true
-  elsif remainder
-    if p[j+1].nil? && p[j] == "*" || p[j+1] == "*"
-      return true
-    else
-      skip = false
-      remainder.each_char do |x|
-        puts x
-        unless skip
-          skip = true unless x == s[-1]
-        else
-          skip = false
-          return false unless x == "*"
-        end
-      end     
-      return skip ? false : true
+# Regex class
+class Regex
+  def is_match(s, p)
+    exp_arr = expressions(p)
+    # puts "exp_arr: #{exp_arr}"
+    curr_exp = exp_arr.shift
+    (0..(s.length - 1)).each do |i|
+      # puts "s: #{s[i]}, curr_exp: #{curr_exp}"
+      return false if curr_exp.nil?
+
+      if s[i] == curr_exp[0] || curr_exp[0] == '.'
+        curr_exp = exp_arr.shift if curr_exp.length == 1
+      elsif curr_exp.length == 2
+        curr_exp = exp_arr.shift
+        redo
+      else
+        return false
+      end
     end
-  else
-    return false
+    if exp_arr.empty?
+      return true if curr_exp.nil? || curr_exp.length != 1
+
+      return false
+    end
+
+    curr_exp = exp_arr.shift while exp_arr[0].length == 2
+    puts "curr_exp: #{curr_exp} exp_arr: #{exp_arr}"
+    # return false if curr_exp && exp_arr
+    return true if exp_arr[0] == s[-1]
+
+    exp_arr.all? { |x| x.length == 2 }
+  end
+
+  def expressions(string)
+    expressions_arr = []
+    (0..(string.length - 1)).each do |i|
+      if string[i] == '*'
+        expressions_arr[-1] += '*'
+        next
+      else
+        expressions_arr.push(string[i])
+      end
+    end
+    expressions_arr
   end
 end
-
-# p is_match("aa", "a") # false
-# p is_match("a", "a*") # true
-# p is_match("ab", ".*") # true
-# p is_match("aab", "c*a*b") #true
-# p is_match("missisippi", "mis*is*p*.") #false
-p is_match("aaa", "aaaa") #false
-# p is_match("aaa", "a*a") # true
-# p is_match("aaa", "ab*a*c*a") # true
-# p is_match("ab", ".*c") # false
-# p is_match("a", "ab*") # true
