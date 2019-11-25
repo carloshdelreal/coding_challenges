@@ -3,7 +3,7 @@
 require './leet/10_regular_expresion.rb'
 
 RSpec.describe Regex do
-  describe 'Regex' do
+  describe 'is_match' do
     it 'is_match("aa", "a") # false' do
       rex = Regex.new
 
@@ -100,6 +100,46 @@ RSpec.describe Regex do
       result = false
       expect(rex.is_match(string, regular_ex)).to eql(result)
     end
+    it 'is_match("a", ".*..a*") # false' do
+      rex = Regex.new
+
+      string = 'a'
+      regular_ex = '.*..a*'
+      result = false
+      expect(rex.is_match(string, regular_ex)).to eql(result)
+    end
+    it 'is_match("bbbba", ".*a*a") # true' do
+      rex = Regex.new
+
+      string = 'bbbba'
+      regular_ex = '.*a*a'
+      result = true
+      expect(rex.is_match(string, regular_ex)).to eql(result)
+    end
+    it 'is_match("bbbba", ".*a") # true' do
+      rex = Regex.new
+
+      string = 'bbbba'
+      regular_ex = '.*a'
+      result = true
+      expect(rex.is_match(string, regular_ex)).to eql(result)
+    end
+    it 'is_match("abbbcd", "ab*bbbcd") # true' do
+      rex = Regex.new
+
+      string = 'abbbcd'
+      regular_ex = 'ab*bbbcd'
+      result = true
+      expect(rex.is_match(string, regular_ex)).to eql(result)
+    end
+    it 'is_match("b", "aaa.") # false' do
+      rex = Regex.new
+
+      string = 'b'
+      regular_ex = 'aaa.'
+      result = false
+      expect(rex.is_match(string, regular_ex)).to eql(result)
+    end
   end
   describe 'expressions' do
     it 'from "aaa" gets ["a", "a", "a"]' do
@@ -129,6 +169,21 @@ RSpec.describe Regex do
       string = 'a*cbd*e.*'
       result = %w[a* c b d* e .*]
       expect(rex.expressions(string)).to eql(result)
+    end
+  end
+  describe 'regex_combinations' do
+    it 'form ["a*", "c", "b", "d*", "e", ".*"]' do
+      rex = Regex.new
+      arr = ['a*', 'c', 'b', 'd*', 'e', '.*']
+      result = [['c', 'b', 'd*', 'e', '.*'], ['a*', 'c', 'b', 'e', '.*'], ['a*', 'c', 'b', 'd*', 'e']]
+      expect(rex.regex_combinations(arr)).to eql(result)
+    end
+
+    it 'form ["a*", "c"]' do
+      rex = Regex.new
+      arr = ['a*', 'c', 'a*']
+      result = [['c', 'a*'], ['a*', 'c']]
+      expect(rex.regex_combinations(arr)).to eql(result)
     end
   end
 end
