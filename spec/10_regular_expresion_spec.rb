@@ -132,6 +132,14 @@ RSpec.describe Regex do
       result = true
       expect(rex.is_match(string, regular_ex)).to eql(result)
     end
+    it 'is_match("b", "aaa.") # false' do
+      rex = Regex.new
+
+      string = 'b'
+      regular_ex = 'aaa.'
+      result = false
+      expect(rex.is_match(string, regular_ex)).to eql(result)
+    end
   end
   describe 'expressions' do
     it 'from "aaa" gets ["a", "a", "a"]' do
