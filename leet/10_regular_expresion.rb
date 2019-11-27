@@ -90,12 +90,14 @@ class RegexRecursive
 
     regex_step(s_arr.dup, p_arr.dup)
   end
+
   def is_match1(s, p)
     p_arr = expressions(p).reverse
     s_arr = s.split('').reverse
 
     regex_step1(s_arr.dup, p_arr.dup)
   end
+
   def is_match2(s, p)
     p_arr = expressions(p).reverse
     s_arr = s.split('').reverse
@@ -169,7 +171,7 @@ class RegexRecursive
     elsif curr_exp[1] == '*' && (curr_s == curr_exp[0] || curr_exp[0] == '.')
       result1 = regex_step(s_arr.dup, p_arr.dup + [curr_exp])
     elsif curr_exp[1] == '*'
-      result1 = regex_step(s_arr.dup + [curr_s], p_arr.dup) 
+      result1 = regex_step(s_arr.dup + [curr_s], p_arr.dup)
     elsif curr_s == curr_exp[0] || (curr_exp[0] == '.')
       result1 = regex_step(s_arr.dup, p_arr.dup)
     end

@@ -15,22 +15,22 @@ class Palindrome
     # puts "Palindrome: #{a[start..finish]}, i: #{start}, j: #{finish}"
     true
   end
-  
+
   def longest_palindrome_1(s)
     pal_len = 0
     pal_s = ''
     l = s.length
     a = s.split('')
-    (0..l-1).each do |i|
+    (0..l - 1).each do |i|
       (i..l).each do |j|
-        if palindrome?(a, i, j)
-          if a[i..j].length > pal_len
-            # puts "i: #{i}, j:#{j}"
-            pal_len = a[i..j].length
-            pal_s = a[i..j].join('')
-            # puts "Subs: #{a[i..j].join('')}, Leng: #{a[i..j-1].length}"
-          end
-        end
+        next unless palindrome?(a, i, j)
+
+        next unless a[i..j].length > pal_len
+
+        # puts "i: #{i}, j:#{j}"
+        pal_len = a[i..j].length
+        pal_s = a[i..j].join('')
+        # puts "Subs: #{a[i..j].join('')}, Leng: #{a[i..j-1].length}"
       end
     end
     pal_s
@@ -87,32 +87,31 @@ class Palindrome
   def longest_palindrome_3(s)
     max = 1000
     l = s.length
-    
+
     start = end_at = 0
     if l == 0
-        return ''
-    else      
-      for i in 0..l-1 do
+      return ''
+    else
+      (0..l - 1).each do |i|
         found1 = expandSearch(s, i, i)
         found2 = expandSearch(s, i, i + 1)
         len = [found1, found2].max
-        if len > end_at - start 
+        if len > end_at - start
           start = i - (len - 1) / 2
           end_at = start + len - 1
         end
       end
-      
+
       return s[start..end_at]
     end
   end
 
   def expandSearch(s, left, right)
-      while left >= 0 && right < s.length && s[left] == s[right]
-          left -= 1
-          right += 1
-      end
-      
-      right - left - 1
-      
+    while left >= 0 && right < s.length && s[left] == s[right]
+      left -= 1
+      right += 1
+    end
+
+    right - left - 1
   end
 end
