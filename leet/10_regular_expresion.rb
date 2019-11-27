@@ -165,7 +165,7 @@ class RegexRecursive
     curr_exp = p_arr.pop
     result1 = nil
     result2 = nil
-    puts "curr_s: #{curr_s}, curr_exp: #{curr_exp}"
+    # puts "curr_s: #{curr_s}, curr_exp: #{curr_exp}"
     if curr_s.nil? && curr_exp[1] == '*'
       result1 = regex_step(s_arr.dup, p_arr.dup)
     elsif curr_exp[1] == '*' && (curr_s == curr_exp[0] || curr_exp[0] == '.')
